@@ -1,0 +1,182 @@
+.ceterChart1_root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .legend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+    padding: 0 1.25vw;
+    box-sizing: border-box;
+
+    img {
+      width: 6.875vw;
+      height: 5.10417vw;
+    }
+  }
+
+  .cigarette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+
+    img {
+      width: 5.15625vw;
+      height: 8.07292vw;
+      transform: scale(0.7) translateY(20%) translateX(15%);
+    }
+  }
+
+  .house {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+
+    img {
+      width: 100%;
+      height: 100%;
+      transform: scale(0.7) translateY(-20%);
+    }
+  }
+
+  .circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateX(40deg) translateY(-5%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 31.77083vw;
+      height: 31.77083vw;
+      animation: myfirst1 50s linear infinite;
+    }
+
+    &::after {
+      content: "";
+      background-image: linear-gradient(
+        RGBA(0, 11, 40, 1) 0%,
+        RGBA(0, 11, 40, 0) 70%
+      );
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .carousel_bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: -webkit-inline-box;
+    -webkit-box-align: end;
+    transition: all 0.3s;
+    z-index: 3;
+
+    .item {
+      position: relative;
+      width: 20%;
+      height: 7.60417vw;
+      background: url("../../assets/images/服务b.png") no-repeat;
+      background-size: 70% 70%;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72917vw;
+      font-weight: bold;
+      color: #d7ecff;
+      text-shadow: 0px 0px 23px rgba(0, 37, 131, 0.95);
+      opacity: 0;
+      transition: all 0.3s;
+
+      img {
+        position: absolute;
+        left: -22%;
+        top: -75%;
+        width: 11.09375vw;
+        height: 11.51042vw;
+        transform: scale(0.5);
+      }
+    }
+
+    .side {
+      margin-bottom: 6vw;
+      opacity: 1;
+
+      img {
+        left: 5%;
+        top: -70%;
+        transform: scale(0.5) rotate(45deg);
+      }
+    }
+
+    .side_two {
+      img {
+        left: -50%;
+        top: -70%;
+        transform: scale(0.5) rotate(-45deg);
+      }
+    }
+
+    .subside {
+      margin-bottom: 2.5vw;
+      opacity: 1;
+
+      img {
+        left: -15%;
+        top: -75%;
+        transform: scale(0.5) rotate(15deg);
+      }
+    }
+
+    .subside_two {
+      img {
+        left: -30%;
+        top: -75%;
+        transform: scale(0.5) rotate(-15deg);
+      }
+    }
+
+    .middle {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes myfirst1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

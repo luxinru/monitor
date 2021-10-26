@@ -1,0 +1,105 @@
+.baseChart_root{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+
+  .left {
+    flex: 1 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .content {
+      position: relative;
+      width: 7.8125vw;
+      height: 7.8125vw;
+
+      img {
+        width: 100%;
+        height: 100%;
+        animation: myfirst1 5s linear infinite;
+      }
+      
+      .label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 1.77083vw;
+        font-weight: bold;
+        color: #00EDFF;
+      }
+    }
+
+    .tip {
+      font-size: 0.83333vw;
+      font-weight: bold;
+      color: #8BD4FF;
+      margin-top: 0.20833vw;
+    }
+  }
+
+  .right {
+    flex: 2 0;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+
+    .box {
+      flex: 1 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .item {
+        position: relative;
+        flex: 1 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          position: absolute;
+          top: calc(50% - 4.94792vw / 2);
+          left: 0;
+          width: 8.125vw;
+          height: 4.94792vw;
+        }
+
+        .label {
+          font-size: 0.83333vw;
+          font-weight: 400;
+          color: #BDDEFF;
+        }
+
+        .value {
+          font-size: 1.25vw;
+          font-weight: bold;
+          color: #00EDFF;
+          margin-top: 0.625vw;
+        }
+      }
+    }
+  }
+}
+
+@keyframes myfirst1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

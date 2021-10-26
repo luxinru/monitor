@@ -1,0 +1,66 @@
+.rightchart1_root {
+  width: 100%;
+  height: 100%;
+  padding: 0.72917vw 0.9375vw;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    tbody {
+      transition: all 0.5s;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      tr {
+        &:nth-child(even) {
+          background: rgba(10, 62, 133, 0.2);
+        }
+      }
+    }
+
+    tr {
+      width: 100%;
+      height: 1.92708vw;
+      display: flex;
+      align-items: center;
+
+      th {
+        flex: 1;
+        height: 100%;
+        background: rgba(0, 110, 202, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72917vw;
+        font-weight: bold;
+        color: #8bd4ff;
+      }
+
+      td {
+        flex: 1;
+        height: 100%;
+        font-size: 0.72917vw;
+        font-weight: bold;
+        color: #4ea0d0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .success {
+        color: rgba(0, 255, 233, 1);
+      }
+
+      .fail {
+        color: #ffea00;
+      }
+    }
+  }
+}
