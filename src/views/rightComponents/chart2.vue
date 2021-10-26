@@ -132,7 +132,7 @@ export default {
             },
             label: {
               show: true,
-              position: [0, '-26px'],
+              position: [0, '-16px'],
               color: 'rgba(139, 212, 255, 1)',
               formatter: '{b}',
               fontSize: 14
