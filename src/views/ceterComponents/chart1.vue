@@ -130,7 +130,6 @@ export default {
         )
       })
       this.leftIndex = type === 0 ? this.leftIndex + 1 : this.leftIndex - 1
-      console.log('this.$refs.carousel_bar', [this.$refs.carousel_bar])
       this.$refs.carousel_bar.style.left = this.leftIndex * -20 + '%'
     }
   }

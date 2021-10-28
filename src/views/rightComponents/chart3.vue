@@ -150,7 +150,6 @@ export default {
                 fontSize: 12
               },
               formatter: function (v) {
-                console.log(v)
                 return v.value * 1000
               }
             },
@@ -180,7 +179,6 @@ export default {
                 position: ['100%', '10%'],
                 fontSize: 18,
                 formatter: function (params) {
-                  console.info(params)
                   return ' ' + (value[params.dataIndex] * 100).toFixed(2) + '%'
                 }
               }
