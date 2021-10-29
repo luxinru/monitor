@@ -163,15 +163,8 @@ export default {
             label: {
               show: true,
               position: 'top',
-              fontSize: 14,
-              fontWeight: 'bold',
-              itemStyle: {
-                normal: {
-                  color: function (params) {
-                    return 'rgba(0, 234, 255, 1)'
-                  }
-                }
-              }
+              fontSize: 12,
+              color: '#78f2ff'
             },
             symbolPosition: 'end',
             data: seriesData
