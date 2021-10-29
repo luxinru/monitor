@@ -25,5 +25,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@font-face {
+  font-family: 'chuanqi';
+  src: url('./assets/fonts/字体传奇特战体-免费商用.ttf');
+}
 </style>

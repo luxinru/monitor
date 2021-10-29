@@ -35,7 +35,7 @@
             <div class="icon">/</div>
             <div :class="{selected: selected === 3}">滚动预警</div>
           </div>
-          <RightChart1></RightChart1>
+          <RightChart1 :type.sync="selected"></RightChart1>
         </Container>
         <Container class="box mt24" title="热度排行">
           <RightChart2></RightChart2>

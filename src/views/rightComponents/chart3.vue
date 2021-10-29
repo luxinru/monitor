@@ -3,11 +3,14 @@
 </template>
 
 <script>
+import { orderBy } from 'lodash'
+import { fetchApplicationCallRanking } from '../../api/index'
 import * as echarts from 'echarts'
 export default {
   name: 'RightChart3',
   data () {
     return {
+      list: [],
       myChart: null
     }
   },
@@ -28,32 +31,28 @@ export default {
     }
   },
 
+  async mounted () {
+    const { data: { datas } } = await fetchApplicationCallRanking({
+      row_num: 25
+    })
+    this.list = orderBy(datas, 'access_times', 'desc').splice(0, 4).map((item) => {
+      return {
+        name: item.app_name,
+        value: item.access_times > 1 ? Number((item.access_times - 1).toFixed(2)) : Number((item.access_times).toFixed(2))
+      }
+    })
+    console.log('this.list', this.list)
+    this.setDeviceSafe()
+  },
+
   methods: {
-    // 计算最大值
-    calMax (arr) {
-      let max = 0
-      arr.forEach((el) => {
-        el.forEach((el1) => {
-          if (!(el1 === undefined || el1 === '')) {
-            if (max < Number(el1)) {
-              max = Number(el1)
-            }
-          }
-        })
-      })
-      const maxint = Math.ceil(max / 9.5)
-      // 不让最高的值超过最上面的刻度
-      const maxval = maxint * 10
-      // 让显示的刻度是整数
-      return maxval
-    },
     // 设备安全性风险
     setDeviceSafe () {
-      var value = [0.4, 0.5, 0.6, 0.72, 0.88]
+      const value = this.list.map(item => item.value)
 
-      var option = {
+      const option = {
         grid: {
-          left: 20,
+          left: '10%',
           right: 20,
           top: 20,
           bottom: 0
@@ -99,9 +98,7 @@ export default {
           axisLabel: {
             show: true,
             interval: 0,
-            margin: 0,
-            align: 'left',
-            padding: [-40, 0, 0, 0],
+            margin: 8,
             textStyle: {
               color: '#78f2ff',
               fontSize: 12
@@ -110,7 +107,7 @@ export default {
           axisTick: {
             show: false
           },
-          data: ['xxx系统1', 'xxx系统2', 'xxx系统3', 'xxx系统4', 'xxx系统5']
+          data: this.list.map(item => item.name)
         },
         series: [
           {
@@ -119,11 +116,6 @@ export default {
             type: 'pictorialBar', // pictorialBar
             barWidth: '30%',
             symbol: 'rect',
-            // symbolRepeat: 'true',
-            // symbolMargin: '80%',
-            // symbolSize: ['20%', '100%'],
-            // symbolOffset: ['150%', '0%'],
-            // symbolRepeat: true,
             itemStyle: {
               normal: {
                 borderWidth: 0,
@@ -175,12 +167,7 @@ export default {
             label: {
               normal: {
                 color: '#fff',
-                show: false,
-                position: ['100%', '10%'],
-                fontSize: 18,
-                formatter: function (params) {
-                  return ' ' + (value[params.dataIndex] * 100).toFixed(2) + '%'
-                }
+                show: false
               }
             },
             data: [1, 1, 1, 1, 1],
@@ -209,9 +196,6 @@ export default {
 
       this.myChart.setOption(option)
     }
-  },
-  mounted () {
-    this.setDeviceSafe()
   }
 }
 </script>

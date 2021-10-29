@@ -4,6 +4,8 @@
 
 <script>
 import * as echarts from 'echarts'
+import { orderBy } from 'lodash'
+import { fetchPopularityRanking } from '../../api/index'
 
 export default {
   name: 'right2',
@@ -11,24 +13,7 @@ export default {
   data () {
     return {
       myChart: null,
-      datas: [
-        {
-          name: '云山市人力和社会资源保障局管理系统社保缴纳明细查询接口',
-          value: 10
-        },
-        {
-          name: '云山市人交通局管理系统社保缴纳明细查询接口',
-          value: 20
-        },
-        {
-          name: '云山市卫生局管理系统社保缴纳明细查询接口',
-          value: 64
-        },
-        {
-          name: '云山市卫生局管理系统社保缴纳明细查询接口',
-          value: 44
-        }
-      ]
+      datas: []
     }
   },
 
@@ -48,7 +33,16 @@ export default {
     }
   },
 
-  mounted () {
+  async mounted () {
+    const { data: { datas } } = await fetchPopularityRanking({
+      row_num: 25
+    })
+    this.datas = orderBy(datas, 'be_accessed_times', 'desc').splice(0, 4).map((item) => {
+      return {
+        name: item.srv_name,
+        value: item.be_accessed_times
+      }
+    })
     this.setDeviceSafe()
   },
 

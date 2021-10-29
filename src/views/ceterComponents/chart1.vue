@@ -23,7 +23,7 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        服务{{ item }}
+        {{ item.node_name + (index + 1) + '' }}
         <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
       </div>
     </section>
@@ -31,39 +31,13 @@
 </template>
 
 <script>
+import { fetchServiceHealthProfile } from '../../api/index'
 
 export default {
   name: 'CeterChart1',
   data () {
     return {
-      list: [
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-        'J',
-        'K',
-        'L',
-        'M',
-        'N',
-        'O',
-        'P',
-        'Q',
-        'R',
-        'S',
-        'T',
-        'U',
-        'V',
-        'W',
-        'X',
-        'Y',
-        'Z'
-      ],
+      list: [],
       selectedIndexArr: [0, 1, 2, 3, 4],
       leftIndex: 0,
       tempInterval: null,
@@ -77,21 +51,25 @@ export default {
   watch: {
   },
 
-  mounted () {
-    this.tempInterval = setInterval(() => {
-      if (this.isChange) {
-        this.moveClick(0)
+  async mounted () {
+    const { data: { datas: { srv_node_info: srvNodeInfo } } } = await fetchServiceHealthProfile()
+    this.list = srvNodeInfo
+    if (this.list.length > 5) {
+      this.tempInterval = setInterval(() => {
+        if (this.isChange) {
+          this.moveClick(0)
 
-        if (this.leftIndex === 21) {
-          this.isChange = false
+          if (this.leftIndex === this.list.length - 5) {
+            this.isChange = false
+          }
+        } else {
+          this.moveClick(1)
+          if (this.leftIndex === 0) {
+            this.isChange = true
+          }
         }
-      } else {
-        this.moveClick(1)
-        if (this.leftIndex === 0) {
-          this.isChange = true
-        }
-      }
-    }, 5 * 1000)
+      }, 5 * 1000)
+    }
   },
 
   methods: {

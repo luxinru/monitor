@@ -4,11 +4,14 @@
 
 <script>
 import * as echarts from 'echarts'
+import { orderBy } from 'lodash'
+import { fetchDepartmentProvidesRanking } from '../../api/index'
 
 export default {
   name: 'CeterChart2',
   data () {
     return {
+      list: [],
       myChart: null
     }
   },
@@ -29,16 +32,23 @@ export default {
     }
   },
 
+  async mounted () {
+    const { data: { datas } } = await fetchDepartmentProvidesRanking({
+      row_num: 25
+    })
+    this.list = datas
+    this.setDeviceSafe()
+  },
+
   methods: {
     // 设备安全性风险
     setDeviceSafe () {
-      var data = [
-        { name: '公安局', value: 432 },
-        { name: '水利局', value: 379 },
-        { name: '教育局', value: 278 },
-        { name: '住建局', value: 251 },
-        { name: '工商局', value: 100 }
-      ]
+      var data = orderBy(this.list, 'provide_access_times', 'desc').splice(0, 6).map((item) => {
+        return {
+          name: item.dept_name,
+          value: item.provide_access_times
+        }
+      })
       var color = '#929292'
       const xAxisData = []
       const seriesData = []
@@ -188,9 +198,6 @@ export default {
 
       this.myChart.setOption(option)
     }
-  },
-  mounted () {
-    this.setDeviceSafe()
   }
 }
 </script>

@@ -4,12 +4,15 @@
 
 <script>
 import * as echarts from 'echarts'
+import { orderBy } from 'lodash'
+import { fetchDepartmentVisitRanking } from '../../api/index'
 
 export default {
   name: 'leftChart3',
 
   data () {
     return {
+      list: [],
       myChart: null
     }
   },
@@ -29,17 +32,25 @@ export default {
       }
     }
   },
+
+  async mounted () {
+    const { data: { datas } } = await fetchDepartmentVisitRanking({
+      row_num: 25
+    })
+    this.list = datas
+    this.setDeviceSafe()
+  },
+
   methods: {
     // 设备安全性风险
     setDeviceSafe () {
-      var data = [
-        { name: '公安局', value: 432 },
-        { name: '水利局', value: 379 },
-        { name: '教育局', value: 278 },
-        { name: '住建局', value: 251 },
-        { name: '工商局', value: 100 }
-      ]
-      var color = '#929292'
+      const data = orderBy(this.list, 'access_times', 'desc').splice(0, 6).map((item) => {
+        return {
+          name: item.dept_name,
+          value: item.access_times
+        }
+      })
+      const color = '#929292'
       const xAxisData = []
       const seriesData = []
       const botData = []
@@ -53,7 +64,7 @@ export default {
         sum += item.value
       })
 
-      var option = {
+      const option = {
         // legend: {
         //   // Try 'horizontal'
         //   orient: 'horizontal',
@@ -212,9 +223,6 @@ export default {
 
       this.myChart.setOption(option)
     }
-  },
-  mounted () {
-    this.setDeviceSafe()
   }
 }
 </script>
