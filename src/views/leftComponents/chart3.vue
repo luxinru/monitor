@@ -53,7 +53,6 @@ export default {
       const color = '#929292'
       const xAxisData = []
       const seriesData = []
-      const botData = []
       let sum = 0
 
       console.log('sum', sum)
@@ -178,19 +177,23 @@ export default {
             data: seriesData
           },
           {
-            name: '',
+            name: '这些',
             type: 'pictorialBar',
             symbolSize: [20, 10],
-            symbolOffset: [0, 5],
-            z: 11,
+            symbolOffset: [0, 0],
+            z: 16,
             itemStyle: {
               normal: {
                 color: function (params) {
-                  return '#2682B5'
+                  return 'rgba(0, 234, 255, 1)'
                 }
               }
             },
-            data: botData
+            label: {
+              show: false
+            },
+            symbolPosition: 'start',
+            data: seriesData
           },
           {
             type: 'bar',
