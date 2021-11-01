@@ -129,13 +129,13 @@ Mock.mock('http://0.0.0.0:8080/ServiceHealthProfile', 'post', {
   datas: {
     bus_info: {
       master: {
-        status: 1
+        status: '@natural(1, 2)'
       },
       backup: {
-        status: 2
+        status: '@natural(1, 2)'
       }
     },
-    'srv_node_info|5-26': [
+    'srv_node_info|1-26': [
       {
         node_name: '@region',
         node_code: '@city',
@@ -144,7 +144,6 @@ Mock.mock('http://0.0.0.0:8080/ServiceHealthProfile', 'post', {
         node_port: '@natural(1000, 9999)'
       } // 返回的结果体
     ]
-
   }
 })
 

@@ -5,12 +5,12 @@
       <img src="../../assets/images/设备路线图例 拷贝.png" alt="">
     </section> -->
 
-    <section class="cigarette">
+    <!-- <section class="cigarette">
       <img src="../../assets/images/未标题-11.gif" alt="" />
-    </section>
+    </section> -->
 
     <section class="house">
-      <img src="../../assets/images/微信图片_20211022162106.png" alt="" />
+      <img :src="imgPath" alt="" />
     </section>
 
     <section class="circle">
@@ -18,14 +18,82 @@
     </section>
 
     <section ref="carousel_bar" class="carousel_bar">
-      <div
-        :class="getClassName(index)"
-        v-for="(item, index) in list"
-        :key="index"
-      >
-        {{ item.node_name + (index + 1) + '' }}
-        <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
-      </div>
+      <template v-if="list.length > 4">
+        <div
+          :class="getClassName(index)"
+          v-for="(item, index) in list"
+          :key="index"
+        >
+          {{ item.node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+      </template>
+
+      <template v-if="list.length === 1">
+        <div class="item side" style="opacity: 0;"></div>
+        <div class="item subside" style="opacity: 0;">
+        </div>
+        <div class="item middle">
+          {{ list[0].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item subside" style="opacity: 0;">
+        </div>
+        <div class="item side" style="opacity: 0;"></div>
+      </template>
+
+      <template v-if="list.length === 2">
+        <div class="item side" style="opacity: 0;"></div>
+        <div class="item subside">
+          {{ list[0].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item middle" style="opacity: 0;"></div>
+        <div class="item subside subside_two">
+          {{ list[1].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item side" style="opacity: 0;"></div>
+      </template>
+
+      <template v-if="list.length === 3">
+        <div class="item side">
+          {{ list[0].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item subside" style="opacity: 0;">
+        </div>
+        <div class="item middle">
+          {{ list[1].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item subside" style="opacity: 0;">
+        </div>
+        <div class="item side side_two">
+          {{ list[2].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+      </template>
+
+      <template v-if="list.length === 4">
+        <div class="item side">
+          {{ list[0].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item subside">
+          {{ list[1].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item middle" style="opacity: 0;"></div>
+        <div class="item subside subside_two">
+          {{ list[2].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+        <div class="item side side_two">
+          {{ list[3].node_name }}
+          <img src="../../assets/images/微信图片_20211025172333.png" alt="" />
+        </div>
+      </template>
     </section>
   </div>
 </template>
@@ -41,18 +109,38 @@ export default {
       selectedIndexArr: [0, 1, 2, 3, 4],
       leftIndex: 0,
       tempInterval: null,
-      isChange: true
+      isChange: true,
+      master: 1,
+      backup: 2,
+      house1: require('../../assets/images/左侧可用右侧异常.gif'),
+      house2: require('../../assets/images/右侧可用左侧异常.gif'),
+      house3: require('../../assets/images/左侧可用右侧待用.gif')
     }
   },
 
   computed: {
+    imgPath () {
+      if (this.master === 1 && this.backup === 0) {
+        return this.house1
+      } else if (this.master === 0 && this.backup === 1) {
+        return this.house2
+      } else if (this.master === 2 && this.backup === 2) {
+        return this.house3
+      } else {
+        return this.house1
+      }
+    }
   },
 
   watch: {
   },
 
   async mounted () {
-    const { data: { datas: { srv_node_info: srvNodeInfo } } } = await fetchServiceHealthProfile()
+    const { data: { datas: { bus_info: busInfo, srv_node_info: srvNodeInfo } } } = await fetchServiceHealthProfile()
+    console.log('busInfo', busInfo)
+    console.log('srvNodeInfo', srvNodeInfo)
+    this.master = busInfo.master.status
+    this.backup = busInfo.backup.status
     this.list = srvNodeInfo
     if (this.list.length > 5) {
       this.tempInterval = setInterval(() => {
